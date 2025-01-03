@@ -4,6 +4,7 @@ from semanticmatch.match import (
     compare,
     compare_multiple,
     get_above_cutoff,
+    get_best_match,
 )
 
 THRESHOLD = 0.7
@@ -110,7 +111,7 @@ def test_compare_above_cutoff(
         "expected_outcome",
     ),
     [
-        ("하다", ["해요", "집", "늘다"], "kor", None, "해요"),
+        ("love", ["affection", "loving", "live"], "eng", 4, "loving"),
     ],
 )
 def test_best_match(
@@ -121,7 +122,7 @@ def test_best_match(
     expected_outcome: str,
 ):
     """Test if Semanticmatch works for given case"""
-    outcomes = get_above_cutoff(
+    outcomes = get_best_match(
         target_word, comparison_words, language_code, decimals, THRESHOLD
     )
 

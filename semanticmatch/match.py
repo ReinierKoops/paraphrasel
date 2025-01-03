@@ -68,9 +68,3 @@ def get_best_match(
     # Get the dict entry with highest float value.
     best_value = max(comparisons, key=comparisons.get)
     return {best_value: comparisons[best_value]}
-
-
-# print(compare("love", "affection", "eng", 4))
-# print(compare_multiple("love", ["affection", "loving", "live"], "eng", 4))
-# print(get_above_cutoff("love", ["affection", "loving", "live"], "eng", 4, 0.6))
-# print(get_best_match("love", ["affection", "loving", "live"], "eng", 4, 0.6))
