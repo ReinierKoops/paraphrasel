@@ -1,0 +1,10 @@
+{
+    "kor": {
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "tokenizer_params": {},
+    },
+    "eng": {
+        "model_name": "google-bert/bert-base-multilingual-cased",
+        "tokenizer_params": {},
+    },
+}

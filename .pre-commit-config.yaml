@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+    - id: check-case-conflict # Different OSes
+      name: 'Check case conflict: Naming of files is compatible with all OSes'
+    - id: check-docstring-first
+      name: 'Check docstring first: Ensures Docstring present and first'
+    - id: detect-private-key
+      name: 'Detect private key: Prevent commit of env related keys'
+    - id: trailing-whitespace
+      name: 'Trailing whitespace: Remove empty spaces'
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: "Ruff: Check for errors, styling issues and complexity, and fixes issues if possible (including import order)"
+        entry: ruff check
+        language: system
+        args: [--fix, --no-cache]
+      - id: ruff-format
+        name: "Ruff: format code in line with PEP8"
+        entry: ruff format
+        language: system
+        args: [--no-cache]
