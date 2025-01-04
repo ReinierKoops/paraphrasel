@@ -1,7 +1,7 @@
 # Naverdict
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/naverdict)
-![PyPI](https://img.shields.io/pypi/v/naverdict)
-![PyPI - License](https://img.shields.io/pypi/l/naverdict)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/paraphrasel)
+![PyPI](https://img.shields.io/pypi/v/paraphrasel)
+![PyPI - License](https://img.shields.io/pypi/l/paraphrasel)
 
 ## Introduction
 
