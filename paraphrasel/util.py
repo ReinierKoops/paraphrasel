@@ -25,6 +25,16 @@ def get_language_config(
 def create_language_config(
     language: str, model_name: str, params: Optional[Dict]
 ) -> Dict:
+    """Create a language config to be used for overriding
+
+    Args:
+        language (str): language used
+        model_name (str): name of the model from sentence-transformers
+        params (Optional[Dict]): some model specific parameters
+
+    Returns:
+        Dict: the config that can be used
+    """
     return {
         language: {
             "model_name": model_name,

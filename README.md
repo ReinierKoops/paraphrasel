@@ -23,7 +23,7 @@ Using this as a Python package you can use the following commands:
 ```python
 >>> from paraphrasel.match import compare
 
->>> compare("study", "해요 to do", "all", 2)
+>>> compare("study", "해요 to do", language="all", decimals=2)
 ```
 ```
 0.21
@@ -33,7 +33,7 @@ Using this as a Python package you can use the following commands:
 ```python
 >>> from paraphrasel.match import compare_multiple
 
->>> compare("study", "해요 to do", "all", 2)
+>>> compare("study", "해요 to do", language="all", decimals=2)
 ```
 ```
 {
@@ -47,7 +47,7 @@ Using this as a Python package you can use the following commands:
 ```python
 >>> from paraphrasel.match import get_above_cutoff
 
->>> compare("study", "해요 to do", "all", 2, 0.22)
+>>> compare("study", "해요 to do", language="all", decimals=2, cutoff=0.22)
 ```
 ```
 {
@@ -60,7 +60,7 @@ Using this as a Python package you can use the following commands:
 ```python
 >>> from paraphrasel.match import get_best_match
 
->>> compare("study", "해요 to do", "all", 2, 0.22)
+>>> compare("study", "해요 to do", language="all", decimals=2, cutoff=0.22)
 ```
 ```
 {

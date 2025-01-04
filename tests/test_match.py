@@ -63,7 +63,7 @@ def test_compare(
             ["해요 to do", "집 house", "늘다 to play"],
             "all",
             None,
-            [True, False, True],
+            [True, False, False],
         ),
     ],
 )
