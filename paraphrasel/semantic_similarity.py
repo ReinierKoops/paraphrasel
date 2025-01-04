@@ -1,14 +1,13 @@
+from typing import Optional
 import numpy as np
 from paraphrasel.util import get_language_config
 from sentence_transformers import SentenceTransformer
 
 
 class SemanticSimilarity:
-    def __init__(self, language_code: str):
-        config = get_language_config(language_code)
-        self.model = SentenceTransformer(
-            config["model_name"], **config["tokenizer_params"]
-        )
+    def __init__(self, language_code: str, override_config: Optional[dict] = None):
+        config = get_language_config(language_code, override_config)
+        self.model = SentenceTransformer(config["model_name"], **config["params"])
 
     def get_embedding(self, text: str) -> np.ndarray:
         return self.model.encode([text], normalize_embeddings=True)[:1]
@@ -30,7 +29,7 @@ class SemanticSimilarity:
         self, target_text: np.ndarray, comparison_texts: np.ndarray
     ) -> list[float]:
         target_embedding = self.get_embedding(target_text)
-        comparison_embeddings = self.get_embedding(comparison_texts)
+        comparison_embeddings = self.get_embeddings(comparison_texts)
 
         return self.model.similarity(target_embedding, comparison_embeddings)[
             0

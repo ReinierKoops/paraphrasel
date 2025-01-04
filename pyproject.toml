@@ -25,10 +25,11 @@ classifiers = [
 dependencies = [
     "torch>=2.5.0",
     "sentence_transformers>=3.0.0",
+    "click>=8.0.0",
 ]
 
 [project.scripts]
-naverdict = "paraphrasel.cli:main"
+paraphrasel = "paraphrasel.cli:cli"
 
 [project.urls]
 Documentation = "https://reinierkoops.github.io/paraphrasel/"

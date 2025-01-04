@@ -32,13 +32,12 @@ def compare_multiple(
     # Compute the similarity score
     similarity_scores = similarity.one_to_many_similarity(target_word, comparison_words)
 
+    # Put into a dict for better traceability
     comparison_dict = {}
     for word, score in zip(comparison_words, similarity_scores):
         # Round the score (or not)
-        if not decimals:
-            comparison_dict[word] = score
-        else:
-            comparison_dict[word] = round(score, decimals)
+        comparison_dict[word] = score if not decimals else round(score, decimals)
+
     return comparison_dict
 
 

@@ -1,6 +1,6 @@
 {
     "all": {
         "model_name": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
-        "tokenizer_params": {}
+        "params": {}
     }
 }

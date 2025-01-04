@@ -43,8 +43,6 @@ def test_compare(
     """Test if paraphrasel works for 4 cases"""
     outcome = compare(target_wordpair, comparison_wordpair, language_code, decimals)
 
-    print(outcome)
-
     if decimals:
         assert count_decimals(outcome) <= decimals
 
