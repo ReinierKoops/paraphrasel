@@ -1,20 +1,3 @@
-# Paraphrasel
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/paraphrasel)
-![PyPI](https://img.shields.io/pypi/v/paraphrasel)
-![PyPI - License](https://img.shields.io/pypi/l/paraphrasel)
-
-## Introduction
-
-Find similar word pairs based on semantics. Makes use of sentence transformers.
-
-## Installation
-
-Install via pip:
-
-```cmd
-pip install paraphrasel
-```
-
 ## How to use with Python
 
 Using this as a Python package you can use the following commands:
@@ -23,7 +6,7 @@ Using this as a Python package you can use the following commands:
 ```python
 >>> from paraphrasel.match import compare
 
->>> compare("study", "해요 to do", "all", 2)
+>>> compare("study", "해요 to do", language="all", decimals=2)
 ```
 ```
 0.21
@@ -33,7 +16,7 @@ Using this as a Python package you can use the following commands:
 ```python
 >>> from paraphrasel.match import compare_multiple
 
->>> compare("study", "해요 to do", "all", 2)
+>>> compare("study", "해요 to do", language="all", decimals=2)
 ```
 ```
 {
@@ -47,7 +30,7 @@ Using this as a Python package you can use the following commands:
 ```python
 >>> from paraphrasel.match import get_above_cutoff
 
->>> compare("study", "해요 to do", "all", 2, 0.22)
+>>> compare("study", "해요 to do", language="all", decimals=2, cutoff=0.22)
 ```
 ```
 {
@@ -60,7 +43,7 @@ Using this as a Python package you can use the following commands:
 ```python
 >>> from paraphrasel.match import get_best_match
 
->>> compare("study", "해요 to do", "all", 2, 0.22)
+>>> compare("study", "해요 to do", language="all", decimals=2, cutoff=0.22)
 ```
 ```
 {

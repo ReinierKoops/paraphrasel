@@ -1,0 +1,38 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install build twine pytest
+          pip install -e .
+
+      - name: Run tests
+        run: pytest
+        # If any test fails, the workflow stops here, so nothing gets published.
+
+      - name: Build the package
+        run: python -m build
+        # This creates dist/*.tar.gz and dist/*.whl
+
+      - name: Publish to PyPI (using API token)
+        run: twine upload dist/*
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}

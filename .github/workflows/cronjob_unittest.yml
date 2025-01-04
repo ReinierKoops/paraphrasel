@@ -1,0 +1,33 @@
+name: "Cron: Weekly Unit Tests"
+
+on:
+  schedule:
+    # Every Sunday at 4:05
+    - cron: "5 4 * * 0"
+
+jobs:
+  test:
+    # We'll run on a matrix of OS and Python versions.
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: [3.9, 3.10, 3.11, 3.12, 3.13]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pytest
+          pip install -e .
+
+      - name: Run unit tests
+        run: pytest
