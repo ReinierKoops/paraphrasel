@@ -1,6 +1,6 @@
 import pytest
 
-from semanticmatch.match import (
+from paraphrasel.match import (
     compare,
     compare_multiple,
     get_above_cutoff,
@@ -20,56 +20,66 @@ def count_decimals(number):
 
 @pytest.mark.parametrize(
     (
-        "target_word",
-        "comparison_word",
+        "target_wordpair",
+        "comparison_wordpair",
         "language_code",
         "decimals",
         "outcome_above_threshold",
     ),
     [
-        ("하다", "해요", "kor", 4, True),
-        ("하다", "집", "kor", 3, False),
-        ("하다", "늘다", "kor", None, True),
-        ("to go", "went", "eng", None, True),
+        ("하다 to do", "해요 do", "all", 4, True),
+        ("하다 to do", "집 house", "all", 3, False),
+        ("하다 to do", "늘다 to play", "all", None, False),
+        ("가다 to go", "갔어요 went", "all", None, True),
     ],
 )
 def test_compare(
-    target_word: str,
-    comparison_word: str,
+    target_wordpair: str,
+    comparison_wordpair: str,
     language_code: str,
     decimals: int,
     outcome_above_threshold: bool,
 ):
-    """Test if Semanticmatch works for 4 cases"""
-    outcome = compare(target_word, comparison_word, language_code, decimals)
+    """Test if paraphrasel works for 4 cases"""
+    outcome = compare(target_wordpair, comparison_wordpair, language_code, decimals)
+
+    print(outcome)
 
     if decimals:
         assert count_decimals(outcome) <= decimals
 
-    assert (outcome > THRESHOLD) == outcome_above_threshold
+    assert (outcome >= THRESHOLD) == outcome_above_threshold
 
 
 @pytest.mark.parametrize(
     (
-        "target_word",
-        "comparison_words",
+        "target_wordpair",
+        "comparison_wordpairs",
         "language_code",
         "decimals",
         "outcome_above_thresholds",
     ),
     [
-        ("하다", ["해요", "집", "늘다"], "kor", None, [True, False, True]),
+        (
+            "하다 to do",
+            ["해요 to do", "집 house", "늘다 to play"],
+            "all",
+            None,
+            [True, False, True],
+        ),
     ],
 )
 def test_compare_multiple(
-    target_word: str,
-    comparison_words: list[str],
+    target_wordpair: str,
+    comparison_wordpairs: list[str],
     language_code: str,
     decimals: int,
     outcome_above_thresholds: list[bool],
 ):
-    """Test if Semanticmatch works for given case"""
-    outcomes = compare_multiple(target_word, comparison_words, language_code, decimals)
+    """Test if paraphrasel works for given case"""
+    outcomes = compare_multiple(
+        target_wordpair, comparison_wordpairs, language_code, decimals
+    )
 
     for outcome_key, above_threshold in zip(outcomes.keys(), outcome_above_thresholds):
         assert (outcomes[outcome_key] > THRESHOLD) == above_threshold
@@ -77,26 +87,32 @@ def test_compare_multiple(
 
 @pytest.mark.parametrize(
     (
-        "target_word",
-        "comparison_words",
+        "target_wordpair",
+        "comparison_wordpairs",
         "language_code",
         "decimals",
         "expected_outcomes",
     ),
     [
-        ("하다", ["해요", "집", "늘다"], "kor", None, ["해요", "늘다"]),
+        (
+            "하다 to do",
+            ["해요 to do", "집 house", "늘다 to play"],
+            "all",
+            None,
+            ["해요 to do"],
+        ),
     ],
 )
 def test_compare_above_cutoff(
-    target_word: str,
-    comparison_words: list[str],
+    target_wordpair: str,
+    comparison_wordpairs: list[str],
     language_code: str,
     decimals: int,
     expected_outcomes: list[str],
 ):
-    """Test if Semanticmatch cutoff works for given case"""
+    """Test if paraphrasel cutoff works for given case"""
     outcomes = get_above_cutoff(
-        target_word, comparison_words, language_code, decimals, THRESHOLD
+        target_wordpair, comparison_wordpairs, language_code, decimals, THRESHOLD
     )
 
     assert list(outcomes.keys()) == expected_outcomes
@@ -104,26 +120,46 @@ def test_compare_above_cutoff(
 
 @pytest.mark.parametrize(
     (
-        "target_word",
-        "comparison_words",
+        "target_wordpair",
+        "comparison_wordpairs",
         "language_code",
         "decimals",
         "expected_outcome",
     ),
     [
-        ("love", ["affection", "loving", "live"], "eng", 4, "loving"),
+        (
+            "사랑 love",
+            ["애정 affection", "좋아하는 loving", "살다 to live"],
+            "all",
+            4,
+            "애정 affection",
+        ),
+        (
+            "하다 to do",
+            ["해요 to do", "집 house", "늘다 to play"],
+            "all",
+            None,
+            "해요 to do",
+        ),
+        (
+            "가다 to go",
+            ["가요 to go", "갔어요 went", "오다 to come"],
+            "all",
+            None,
+            "가요 to go",
+        ),
     ],
 )
 def test_best_match(
-    target_word: str,
-    comparison_words: list[str],
+    target_wordpair: str,
+    comparison_wordpairs: list[str],
     language_code: str,
     decimals: int,
     expected_outcome: str,
 ):
-    """Test if Semanticmatch works for given case"""
+    """Test if paraphrasel works for given case"""
     outcomes = get_best_match(
-        target_word, comparison_words, language_code, decimals, THRESHOLD
+        target_wordpair, comparison_wordpairs, language_code, decimals, THRESHOLD
     )
 
     assert list(outcomes.keys())[0] == expected_outcome

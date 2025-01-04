@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "semanticmatch"
+name = "paraphrasel"
 dynamic = ["version"]
 requires-python= ">=3.10"
 description = "Match word semantic similarity"
@@ -28,12 +28,12 @@ dependencies = [
 ]
 
 [project.scripts]
-naverdict = "semanticmatch.cli:main"
+naverdict = "paraphrasel.cli:main"
 
 [project.urls]
-Documentation = "https://reinierkoops.github.io/semanticmatch/"
-Repository = "https://github.com/ReinierKoops/semanticmatch.git"
-Changelog = "https://github.com/ReinierKoops/semanticmatch/releases"
+Documentation = "https://reinierkoops.github.io/paraphrasel/"
+Repository = "https://github.com/ReinierKoops/paraphrasel.git"
+Changelog = "https://github.com/ReinierKoops/paraphrasel/releases"
 
 [project.optional-dependencies]
 dev = [
@@ -50,11 +50,11 @@ dev = [
 exclude = ["tests", "docs"]
 
 [tool.setuptools.dynamic]
-version = {attr = "semanticmatch.__version__"}
+version = {attr = "paraphrasel.__version__"}
 
 [tool.ruff]
 line-length = 88
-extend-exclude = ["docs", "mkdocs.yml", ".github", "*md", "LICENSE", ".pre-commit-config.yaml", ".gitignore", "data", "*.css", "*.zip", "MANIFEST.in"]
+extend-exclude = ["language_configs.json", "docs", "mkdocs.yml", ".github", "*md", "LICENSE", ".pre-commit-config.yaml", ".gitignore", "data", "*.css", "*.zip", "MANIFEST.in"]
 force-exclude = true
 
 [tool.ruff.lint]

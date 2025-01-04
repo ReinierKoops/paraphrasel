@@ -1,18 +1,18 @@
 from typing import Optional
-from semanticmatch.semantic_similarity import SemanticSimilarity
+from paraphrasel.semantic_similarity import SemanticSimilarity
 
 
 def compare(
     target_word: str,
     comparison_word: str,
-    language_code: str = "eng",
+    language_code: str = "all",
     decimals: Optional[int] = None,
 ) -> float:
     # Initialize the language
     similarity = SemanticSimilarity(language_code)
 
     # Compute the similarity score
-    similarity_score = similarity.compute_similarity(target_word, comparison_word)
+    similarity_score = similarity.one_to_one_similarity(target_word, comparison_word)
 
     # Round the score (or not)
     if not decimals:
@@ -23,19 +23,29 @@ def compare(
 def compare_multiple(
     target_word: str,
     comparison_words: list[str],
-    language_code: str = "eng",
+    language_code: str = "all",
     decimals: Optional[int] = None,
 ) -> dict[str]:
-    return {
-        comparison_word: compare(target_word, comparison_word, language_code, decimals)
-        for comparison_word in comparison_words
-    }
+    # Initialize the language
+    similarity = SemanticSimilarity(language_code)
+
+    # Compute the similarity score
+    similarity_scores = similarity.one_to_many_similarity(target_word, comparison_words)
+
+    comparison_dict = {}
+    for word, score in zip(comparison_words, similarity_scores):
+        # Round the score (or not)
+        if not decimals:
+            comparison_dict[word] = score
+        else:
+            comparison_dict[word] = round(score, decimals)
+    return comparison_dict
 
 
 def get_above_cutoff(
     target_word: str,
     comparison_words: list[str],
-    language_code: str = "eng",
+    language_code: str = "all",
     decimals: Optional[int] = None,
     cutoff: Optional[float] = None,
 ) -> Optional[dict[str]]:
@@ -57,7 +67,7 @@ def get_above_cutoff(
 def get_best_match(
     target_word: str,
     comparison_words: list[str],
-    language_code: str = "eng",
+    language_code: str = "all",
     decimals: Optional[int] = None,
     cutoff: Optional[float] = None,
 ) -> Optional[dict[str]]:

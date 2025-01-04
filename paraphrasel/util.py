@@ -3,7 +3,7 @@ import os
 from typing import Dict
 
 # Adjust the path if your JSON is elsewhere
-CONFIG_PATH = os.path.join(os.path.dirname(__file__), "language_configs.json")
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config/language_configs.json")
 
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     LANGUAGE_CONFIGS: Dict[str, Dict] = json.load(f)
